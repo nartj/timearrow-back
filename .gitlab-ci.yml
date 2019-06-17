@@ -1,9 +1,9 @@
-image: tiangolo/docker-with-compose
+image: docker:latest
 
 before_script:
-  - run service docker start
-  - run service docker status
-  - docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY
+  - apk add --no-cache py-pip
+  - pip install docker-compose
+  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
 
 ci:
   script:
