@@ -33,6 +33,21 @@ services:
       time_arrow_net:
         ipv4_address: 192.168.0.3
 
+  event:
+    build: EventService
+    volumes:
+      - "./Config/Event/event-ENV.json:/usr/app/Config/ENV.json"
+      - "./Config/Event/event-ormconfig.json:/usr/app/ormconfig.json"
+    ports:
+      - "84:3000"
+    depends_on:
+      - database
+    links:
+      - database
+    networks:
+      time_arrow_net:
+        ipv4_address: 192.168.0.6
+
 networks:
   time_arrow_net:
     driver: bridge
