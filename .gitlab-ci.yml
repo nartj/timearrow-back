@@ -5,6 +5,8 @@ before_script:
 
 ci:
   script:
+    - echo $CI_DEPLOY_USER
+    - echo $CI_REGISTRY
     - docker-compose build
     - docker-compose up -d
     #- docker-compose exec -T
