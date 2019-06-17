@@ -47,6 +47,10 @@ export class BaseValidator {
             value = value ? 'true' : 'false';
         }
 
+        if (Array.isArray(value)) {
+            value = `[${value.toString()}]`;
+        }
+
         if (value !== null && typeof value === 'object') {
             throw new Error(validator.getErrorField() + ': ' + validator.getErrorMessage());
         }
