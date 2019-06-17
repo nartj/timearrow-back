@@ -1,0 +1,9 @@
+{
+  "SENDER_EMAIL":  "",
+  "SENDER_PASSWORD": "",
+  "WEB_APP_URL": "",
+  "WEB_APP_RESET_PASSWORD_LINK": "",
+  "JWT_SECRET": "SeCrEt",
+  "APP_SECRET": "notSoSecret",
+  "EXCLUDED_JWT_RESOURCES": {"/login": ["POST"], "/user": ["POST"]}
+}

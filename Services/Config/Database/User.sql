@@ -1,0 +1,3 @@
+CREATE DATABASE timeArrowUser;
+CREATE USER 'user'@'192.168.0.3' IDENTIFIED BY 'user';
+GRANT ALL PRIVILEGES ON * . * TO 'user'@'192.168.0.3';
