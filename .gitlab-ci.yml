@@ -1,0 +1,11 @@
+image: tiangolo/docker-with-compose
+
+before_script:
+  - docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY
+
+ci:
+  script:
+    - docker-compose build
+    - docker-compose up -d
+    #- docker-compose exec -T
+    - docker-compose down -v
