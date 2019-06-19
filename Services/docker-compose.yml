@@ -44,7 +44,9 @@ services:
       - database
     links:
       - database
-    ipv4_address: 192.168.0.4
+    networks:
+        time_arrow_net:
+          ipv4_address: 192.168.0.4
 
   state:
     build: StateService
@@ -57,7 +59,9 @@ services:
       - database
     links:
       - database
-    ipv4_address: 192.168.0.5
+    networks:
+      time_arrow_net:
+        ipv4_address: 192.168.0.5
 
   event:
     build: EventService
@@ -70,8 +74,10 @@ services:
       - database
     ports:
       - "84:3000"
+    networks:
+      time_arrow_net:
         ipv4_address: 192.168.0.6
-        
+
   timeline:
     build: TimelineService
     volumes:
@@ -100,7 +106,7 @@ services:
       - database
     networks:
       time_arrow_net:
-    ipv4_address: 192.168.0.8
+        ipv4_address: 192.168.0.8
 
 networks:
   time_arrow_net:
