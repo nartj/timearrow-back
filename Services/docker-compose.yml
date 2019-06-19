@@ -33,6 +33,19 @@ services:
       time_arrow_net:
         ipv4_address: 192.168.0.3
 
+  state:
+    build: StateService
+    volumes:
+      - "./Config/State/state-ENV.json:/usr/app/Config/ENV.json"
+      - "./Config/State/state-ormconfig.json:/usr/app/ormconfig.json"
+    ports:
+      - "83:3000"
+    depends_on:
+      - database
+    links:
+      - database
+    ipv4_address: 192.168.0.5
+
   event:
     build: EventService
     volumes:
@@ -74,7 +87,7 @@ services:
       - database
     networks:
       time_arrow_net:
-        ipv4_address: 192.168.0.8
+    ipv4_address: 192.168.0.8
 
 networks:
   time_arrow_net:
