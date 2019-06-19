@@ -63,6 +63,12 @@ export class User extends DeleteAwareMixin {
     })
     private roles: string;
 
+    @Column({
+        type: 'simple-array',
+        default: null
+    })
+    private contribution: Array<number>;
+
     getFirstName(): string {
         return this.firstName;
     }
@@ -144,6 +150,15 @@ export class User extends DeleteAwareMixin {
 
     setRoles(roles: string[]): this {
         this.roles = JSON.stringify(roles);
+        return this;
+    }
+
+    getContribution(): Array<number> {
+        return this.contribution;
+    }
+
+    setContributions(value: Array<number>): this {
+        this.contribution = value;
         return this;
     }
 }
