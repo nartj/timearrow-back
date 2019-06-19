@@ -10,6 +10,7 @@ createConnection().then(() => {
     process.env = JSON.parse(readFileSync(`${__dirname}/../Config/ENV.json`).toString());
 
     const app = createExpressServer({
+        cors: true,
         defaultErrorHandler: false,
         controllers: [__dirname + "/Controller/*.ts"],
         middlewares: [__dirname + "/Middleware/*.ts"],
