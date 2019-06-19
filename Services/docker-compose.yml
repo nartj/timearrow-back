@@ -44,9 +44,63 @@ services:
       - database
     links:
       - database
+    ipv4_address: 192.168.0.4
+
+  state:
+    build: StateService
+    volumes:
+      - "./Config/State/state-ENV.json:/usr/app/Config/ENV.json"
+      - "./Config/State/state-ormconfig.json:/usr/app/ormconfig.json"
+    ports:
+      - "83:3000"
+    depends_on:
+      - database
+    links:
+      - database
+    ipv4_address: 192.168.0.5
+
+  event:
+    build: EventService
+    volumes:
+      - "./Config/Event/event-ENV.json:/usr/app/Config/ENV.json"
+      - "./Config/Event/event-ormconfig.json:/usr/app/ormconfig.json"
+    depends_on:
+      - database
+    links:
+      - database
+    ports:
+      - "84:3000"
+        ipv4_address: 192.168.0.6
+        
+  timeline:
+    build: TimelineService
+    volumes:
+      - "./Config/Timeline/timeline-ENV.json:/usr/app/Config/ENV.json"
+      - "./Config/Timeline/timeline-ormconfig.json:/usr/app/ormconfig.json"
+    ports:
+      - "85:3000"
+    depends_on:
+      - database
+    links:
+      - database
     networks:
       time_arrow_net:
-        ipv4_address: 192.168.0.4
+        ipv4_address: 192.168.0.7
+
+  topic:
+    build: TopicService
+    volumes:
+      - "./Config/Topic/topic-ENV.json:/usr/app/Config/ENV.json"
+      - "./Config/Topic/topic-ormconfig.json:/usr/app/ormconfig.json"
+    ports:
+      - "86:3000"
+    depends_on:
+      - database
+    links:
+      - database
+    networks:
+      time_arrow_net:
+    ipv4_address: 192.168.0.8
 
 networks:
   time_arrow_net:
