@@ -31,7 +31,8 @@ export class UserService {
                 .setLastName(userData.lastName)
                 .setEmail(userData.email)
                 .setPassword(hash)
-                .setRoles([RoleService.ANONYMOUS, RoleService.USER]);
+                .setRoles([RoleService.ANONYMOUS, RoleService.USER])
+                .setContributions(userData.contributions);
         }
         throw new HttpError(400, 'Email already exists');
     }
@@ -57,6 +58,10 @@ export class UserService {
 
         if (userData.email) {
             user.setEmail(userData.email);
+        }
+
+        if (userData.contributions) {
+            user.setContributions(userData.contributions);
         }
     }
 

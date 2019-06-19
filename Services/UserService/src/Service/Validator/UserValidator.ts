@@ -6,6 +6,7 @@ import { StringPattern } from './Pattern/StringPattern';
 import { EmailPattern } from './Pattern/EmailPattern';
 import { PhonePattern } from './Pattern/PhonePattern';
 import { DateOrEmptyStringPattern } from './Pattern/DateOrEmptyStringPattern';
+import { ArrayPattern } from "./Pattern/ArrayPattern";
 import { Service } from "typedi";
 
 @Service()
@@ -20,6 +21,7 @@ export class UserValidator extends BaseValidator {
             new DefaultValidatorType('email', new EmailPattern(), true),
             new DefaultValidatorType('phoneNumber', new PhonePattern(), false, 'phone number'),
             new DefaultValidatorType('birthDate', new DateOrEmptyStringPattern(), false, 'birth date'),
+            new DefaultValidatorType('contributions', new ArrayPattern(), false, 'contributions'),
         ]);
     }
 
@@ -32,6 +34,7 @@ export class UserValidator extends BaseValidator {
             new DefaultValidatorType('email', new EmailPattern(), false),
             new DefaultValidatorType('phoneNumber', new PhonePattern(), false, 'phone number'),
             new DefaultValidatorType('birthDate', new DateOrEmptyStringPattern(), false, 'birth date'),
+            new DefaultValidatorType('contributions', new ArrayPattern(), false, 'contributions'),
         ]);
     }
 
