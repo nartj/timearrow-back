@@ -33,6 +33,19 @@ services:
       time_arrow_net:
         ipv4_address: 192.168.0.3
 
+  contribution:
+    build: ContributionService
+    volumes:
+      - "./Config/Contribution/contribution-ENV.json:/usr/app/Config/ENV.json"
+      - "./Config/Contribution/contribution-ormconfig.json:/usr/app/ormconfig.json"
+    ports:
+      - "82:3000"
+    depends_on:
+      - database
+    links:
+      - database
+    ipv4_address: 192.168.0.4
+
   state:
     build: StateService
     volumes:
