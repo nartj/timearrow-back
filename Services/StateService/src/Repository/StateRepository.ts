@@ -1,6 +1,6 @@
 import { State } from "../Entity/State";
 import { Service } from "typedi";
-import {Connection, getConnection, getManager, Repository} from "typeorm";
+import { Connection, getConnection, getManager, Repository, FindManyOptions } from "typeorm";
 
 @Service()
 export class StateRepository {
@@ -34,6 +34,14 @@ export class StateRepository {
     public async find() {
         await this.connection.connect();
         let states: State[] = await this.entityManager.find();
+        await this.connection.close();
+
+        return states;
+    }
+
+    public async findAndCount(options?: FindManyOptions<State>): Promise<State[]> {
+        await this.connection.connect();
+        let states = await this.entityManager.find(options);
         await this.connection.close();
 
         return states;

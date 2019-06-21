@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from 'routing-controllers';
+import { Controller, Get, Param, QueryParam } from 'routing-controllers';
 import { AbstractController } from './AbstractController'
 import { RoleService } from "../Service/RoleService";
 
@@ -14,10 +14,10 @@ export class GetController extends AbstractController {
     }
 
     @Get()
-    public async getContributions() {
+    public async getContributions(@QueryParam('from') from: number, @QueryParam('size') size: number) {
 
         this.roleService.check(this.authenticatedUserAware.getAuthenticatedUser(), RoleService.USER);
 
-        return await this.contributionService.getContributions();
+        return await this.contributionService.getContributions(from, size);
     }
 }

@@ -79,7 +79,10 @@ export class UserService {
         return user;
     }
 
-    public async getUsers(): Promise<User[]> {
+    public async getUsers(from: number, size: number): Promise<User[]> {
+        if (from && size)
+            return this.paginate(from, size);
+
         return await this.userRepository.find();
     }
 
@@ -136,4 +139,12 @@ export class UserService {
 
         return webAppUrl.trim() + '/' + resetPasswordLink.trim() + '/' + user.getConfirmationToken();
     }
+
+    public async paginate(from: number, size: number): Promise<User[]> {
+        return await this.userRepository.findAndCount({
+            take: size,
+            skip: from,
+        });
+    }
+
 }

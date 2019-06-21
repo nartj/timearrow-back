@@ -68,7 +68,17 @@ export class EventService {
         return event;
     }
 
-    public async getEvents(): Promise<Event[]> {
+    public async getEvents(from: number, size: number): Promise<Event[]> {
+        if (from && size)
+            return this.paginate(from, size);
+
         return await this.eventRepository.find();
+    }
+
+    public async paginate(from: number, size: number): Promise<Event[]> {
+        return await this.eventRepository.findAndCount({
+            take: size,
+            skip: from,
+        });
     }
 }

@@ -74,7 +74,17 @@ export class TimelineService {
         return timeline;
     }
 
-    public async getTimelines(): Promise<Timeline[]> {
+    public async getTimelines(from: number, size: number): Promise<Timeline[]> {
+        if (from && size)
+            return this.paginate(from, size);
+
         return await this.timelineRepository.find();
+    }
+
+    public async paginate(from: number, size: number): Promise<Timeline[]> {
+        return await this.timelineRepository.findAndCount({
+            take: size,
+            skip: from,
+        });
     }
 }
