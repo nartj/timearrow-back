@@ -1,6 +1,6 @@
 import { Event } from "../Entity/Event";
 import { Service } from "typedi";
-import {Connection, getConnection, getManager, Repository} from "typeorm";
+import {Connection, getConnection, getManager, Repository, FindManyOptions} from "typeorm";
 
 @Service()
 export class EventRepository {
@@ -34,6 +34,14 @@ export class EventRepository {
     public async find() {
         await this.connection.connect();
         let events: Event[] = await this.entityManager.find();
+        await this.connection.close();
+
+        return events;
+    }
+
+    public async findAndCount(options?: FindManyOptions<Event>): Promise<Event[]> {
+        await this.connection.connect();
+        let events = await this.entityManager.find(options);
         await this.connection.close();
 
         return events;

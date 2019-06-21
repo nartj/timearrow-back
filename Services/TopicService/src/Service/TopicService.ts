@@ -59,7 +59,17 @@ export class TopicService {
         return topic;
     }
 
-    public async getTopics(): Promise<Topic[]> {
+    public async getTopics(from: number, size: number): Promise<Topic[]> {
+        if (from && size)
+            return this.paginate(from, size);
+
         return await this.topicRepository.find();
+    }
+
+    public async paginate(from: number, size: number): Promise<Topic[]> {
+        return await this.topicRepository.findAndCount({
+            take: size,
+            skip: from,
+        });
     }
 }

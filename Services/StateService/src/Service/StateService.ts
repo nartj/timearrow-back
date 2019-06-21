@@ -53,7 +53,17 @@ export class StateService {
         return state;
     }
 
-    public async getStates(): Promise<State[]> {
+    public async getStates(from: number, size: number): Promise<State[]> {
+        if (from && size)
+            return this.paginate(from, size);
+
         return await this.stateRepository.find();
+    }
+
+    public async paginate(from: number, size: number): Promise<State[]> {
+        return await this.stateRepository.findAndCount({
+            take: size,
+            skip: from,
+        });
     }
 }

@@ -63,7 +63,17 @@ export class ContributionService {
         return contribution;
     }
 
-    public async getContributions(): Promise<Contribution[]> {
+    public async getContributions(from: number, size: number): Promise<Contribution[]> {
+        if (from && size)
+            return this.paginate(from, size);
+
         return await this.contributionRepository.find();
+    }
+
+    public async paginate(from: number, size: number): Promise<Contribution[]> {
+        return await this.contributionRepository.findAndCount({
+            take: size,
+            skip: from,
+        });
     }
 }

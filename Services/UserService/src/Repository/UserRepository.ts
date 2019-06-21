@@ -1,6 +1,6 @@
 import { User } from "../Entity/User";
 import { Service } from "typedi";
-import {Connection, getConnection, getManager, Repository} from "typeorm";
+import {Connection, FindManyOptions, getConnection, getManager, Repository} from "typeorm";
 
 @Service()
 export class UserRepository {
@@ -34,6 +34,14 @@ export class UserRepository {
     public async find() {
         await this.connection.connect();
         let users: User[] = await this.entityManager.find();
+        await this.connection.close();
+
+        return users;
+    }
+
+    public async findAndCount(options?: FindManyOptions<User>): Promise<User[]> {
+        await this.connection.connect();
+        let users = await this.entityManager.find(options);
         await this.connection.close();
 
         return users;

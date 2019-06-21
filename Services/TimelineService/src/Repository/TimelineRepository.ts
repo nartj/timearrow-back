@@ -1,6 +1,7 @@
 import { Timeline } from "../Entity/Timeline";
 import { Service } from "typedi";
-import {Connection, getConnection, getManager, Repository} from "typeorm";
+import { Connection, getConnection, getManager, Repository, FindManyOptions } from "typeorm";
+
 
 @Service()
 export class TimelineRepository {
@@ -34,6 +35,14 @@ export class TimelineRepository {
     public async find() {
         await this.connection.connect();
         let timelines: Timeline[] = await this.entityManager.find();
+        await this.connection.close();
+
+        return timelines;
+    }
+
+    public async findAndCount(options?: FindManyOptions<Timeline>): Promise<Timeline[]> {
+        await this.connection.connect();
+        let timelines = await this.entityManager.find(options);
         await this.connection.close();
 
         return timelines;
