@@ -75,8 +75,16 @@ export class EventService {
         return await this.eventRepository.find();
     }
 
-    public async paginate(from: number, size: number): Promise<Event[]> {
+    public async getEventsByTimeline(id: number, from: number, size: number) {
+        if (from && size)
+            return this.paginate(from, size, {where: {timeline: id}});
+
+        return await this.eventRepository.find({where: {timeline: id}});
+    }
+
+    public async paginate(from: number, size: number, options: any = {}) : Promise<Event[]> {
         return await this.eventRepository.findAndCount({
+            ...options,
             take: size,
             skip: from,
         });

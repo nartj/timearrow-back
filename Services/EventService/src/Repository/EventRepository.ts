@@ -31,9 +31,9 @@ export class EventRepository {
         return event;
     }
 
-    public async find() {
+    public async find(options: any = {}) {
         await this.connection.connect();
-        let events: Event[] = await this.entityManager.find();
+        let events: Event[] = await this.entityManager.find(options);
         await this.connection.close();
 
         return events;
