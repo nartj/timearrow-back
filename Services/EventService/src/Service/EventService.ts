@@ -1,7 +1,7 @@
-import { Event } from '../Entity/Event';
-import { EventValidator } from './Validator/EventValidator';
-import { HttpError } from "routing-controllers";
-import { Inject, Service } from "typedi";
+import {Event} from '../Entity/Event';
+import {EventValidator} from './Validator/EventValidator';
+import {HttpError} from "routing-controllers";
+import {Inject, Service} from "typedi";
 import {EventRepository} from "../Repository/EventRepository";
 
 @Service()
@@ -26,7 +26,7 @@ export class EventService {
             .setTimeline(eventData.timeline);
     }
 
-    public updateContribution(eventData: any, event: Event) {
+    public updateEvent(eventData: any, event: Event) {
         this.eventValidator.validateUpdateData(eventData);
 
         if (eventData.title) {
@@ -70,19 +70,19 @@ export class EventService {
 
     public async getEvents(from: number, size: number): Promise<Event[]> {
         if (from && size)
-            return this.paginate(from, size);
+            return this.paginate(from, size, {where: {deleted: false}});
 
-        return await this.eventRepository.find();
+        return await this.eventRepository.find({where: {deleted: false}});
     }
 
     public async getEventsByTimeline(id: number, from: number, size: number) {
         if (from && size)
-            return this.paginate(from, size, {where: {timeline: id}});
+            return this.paginate(from, size, {where: {timeline: id, deleted: false}});
 
-        return await this.eventRepository.find({where: {timeline: id}});
+        return await this.eventRepository.find({where: {timeline: id, deleted: false}});
     }
 
-    public async paginate(from: number, size: number, options: any = {}) : Promise<Event[]> {
+    public async paginate(from: number, size: number, options: any = {}): Promise<Event[]> {
         return await this.eventRepository.findAndCount({
             ...options,
             take: size,

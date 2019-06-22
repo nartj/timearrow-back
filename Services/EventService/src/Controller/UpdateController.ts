@@ -11,7 +11,7 @@ export class UpdateController extends AbstractController {
         this.roleService.check(this.authenticatedUserAware.getAuthenticatedUser(), RoleService.USER);
 
         let event = await this.eventService.getEvent(id);
-        this.eventService.updateContribution(eventData, event);
+        this.eventService.updateEvent(eventData, event);
         return await this.eventRepository.saveEvent(event);
     }
 }
