@@ -13,6 +13,14 @@ export class GetController extends AbstractController {
         return await this.eventService.getEvent(id);
     }
 
+    @Get('/timeline/:id')
+    public async getEventsByTimeline(@Param('id') id: number, @QueryParam('from') from: number, @QueryParam('size') size: number) {
+
+        this.roleService.check(this.authenticatedUserAware.getAuthenticatedUser(), RoleService.USER);
+
+        return await this.eventService.getEventsByTimeline(id, from, size);
+    }
+
     @Get()
     public async getEvents(@QueryParam('from') from: number, @QueryParam('size') size: number) {
 
